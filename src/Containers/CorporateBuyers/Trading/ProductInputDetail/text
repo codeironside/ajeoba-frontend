@@ -1,0 +1,244 @@
+<Grid
+          container
+          sx={[
+            commonStyles.productInputOrderContainer,
+            commonStyles.customSrollBar,
+          ]}
+        >
+          <Box
+            sx={[
+              commonStyles.productInputOrderImage
+            ]}
+          >
+              { uploading || delayLoading ? 
+              <Skeleton 
+                sx={{
+                  bgcolor: "rgba(245, 245, 245, 1)",
+                  borderRadius: ".5rem",
+                  position: "absolute", 
+                  right: "2.25rem", 
+                  top: "1.25rem"
+                }}
+                width={50}
+              /> :
+              <Box sx={{ position: "absolute", right: "1.5rem", top: "16px", borderRadius: "4px", backgroundColor: "#DB371F", color: "#FFFFFF", fontFamily:"Poppins", fontWeight: "600", fontSize: "12px", lineHeight: "18px", padding: "4px 10px 4px 10px" }} vertical='top' horizontal='right'>
+              {product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.product_type : inputActiveAdDetail?.advertisementDetail?.input_subtype} 
+              </Box>}
+              { uploading || delayLoading ? 
+                <Skeleton 
+                  sx={{
+                    bgcolor: "rgba(245, 245, 245, 1)",
+                    borderRadius: ".5rem",
+                    display: "block",
+                  }}
+                  width={351} 
+                  height={223} 
+                /> :
+                <img  
+                  src={
+                    product_type === "product-details" ?
+                      generateImageUrl(!change ? productActiveAdDetail?.AdvertisemetDetail?.file_path : changeImage) : 
+                      generateImageUrl(!change ? inputActiveAdDetail?.advertisementDetail?.url : changeImage)
+                  }
+                  alt={"product-name"}
+                  style={{borderRadius: "0.5rem", height: "224px", width: "100%"}}
+                />}
+                <AjDialogProductImages
+                    open={openProductImagesModal}
+                    close={setOpenProductImagesModal}
+                    title={"Product Images"}
+                    styleData={commonStyles.buyDialogModalContainer}
+                  >
+                    {/* Product Images */}
+                    <AjViewProductImage />
+                </AjDialogProductImages>
+              { uploading || delayLoading ? 
+              <Skeleton 
+                sx={{
+                  bgcolor: "rgba(245, 245, 245, 1)",
+                  borderRadius: ".5rem",
+                }}
+                width={60} 
+                height={54} /> :
+            <Box sx={[
+                commonStyles.productInputOrderName, commonStyles.hide
+              ]}>
+                <ListingImages 
+                  images={product_type === "product-details" ? 
+                  productActiveAdDetail?.AdvertisemetDetail?.other_images :
+                  inputActiveAdDetail?.advertisementDetail?.other_images} 
+                  image_length={product_type === "product-details" ? 
+                  productActiveAdDetail?.AdvertisemetDetail?.other_images?.length :
+                  inputActiveAdDetail?.advertisementDetail?.other_images?.length} 
+                  changeImage={setChangeImage} 
+                  setChange={setChange}
+                  setOpenProductImagesModal={setOpenProductImagesModal}
+                  loading={product_type === "product-details" ? uploading : delayLoading}
+                  />
+              </Box>}
+          </Box>
+          <Box
+            sx={[
+              commonStyles.productInputOrderDescription
+            ]}
+          >
+            
+            <Box sx={[commonStyles.product_info_block]}>
+            { uploading || delayLoading ? <Skeleton 
+            sx={{
+              bgcolor: "rgba(245, 245, 245, 1)",
+              borderRadius: ".5rem",
+            }}
+            width={100} /> :
+            <Typography component='div' sx={{ textTransform: "capitalize" }}><Box component="span" sx={{ fontWeight: "500", color: "#090909", fontSize: "1.5rem", lineHeight: "1.75rem" }} display='inline'>{product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.product_name : inputActiveAdDetail?.advertisementDetail?.input_name}</Box></Typography>}
+            { uploading || delayLoading ? <Skeleton 
+              sx={{
+                bgcolor: "rgba(245, 245, 245, 1)",
+                borderRadius: ".5rem",
+              }}
+              width={100} /> :
+              <Button variant="outlined" sx={[commonStyles.btn]}>{product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.batch_type : inputActiveAdDetail?.advertisementDetail?.input_subtype}</Button>}
+            </Box>
+            <Box sx={[commonStyles.product_info_block]}>
+            { uploading || delayLoading ? <Skeleton 
+            sx={{
+              bgcolor: "rgba(245, 245, 245, 1)",
+              borderRadius: ".5rem",
+            }}
+            width={150} /> :
+            <Typography component='div'>Seller: <Box component="span" fontWeight='fontWeightMedium' display='inline'>{product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.first_name + " " + productActiveAdDetail?.AdvertisemetDetail?.last_name : inputActiveAdDetail?.advertisementDetail?.input_supplier_name}</Box></Typography>}
+              { uploading || delayLoading ? <Skeleton 
+              sx={{
+                bgcolor: "rgba(245, 245, 245, 1)",
+                borderRadius: ".5rem",
+              }}
+              width={100} /> :
+              <Box sx={{ "display": "flex", "gap":"10px", "align-items":"center" }}>
+                      <Typography
+                          sx={{  }}
+                          gutterBottom
+                          variant="p"
+                      >
+                          {product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.rating : inputActiveAdDetail?.advertisementDetail?.rating}
+                      </Typography>
+                      <Typography
+                          sx={{  }}
+                          gutterBottom
+                          variant="p"
+                      >
+                          <AjRating
+                            defaultValue={product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.rating : inputActiveAdDetail?.advertisementDetail?.rating}
+                            readOnly={true}
+                            size="small"
+                          />
+                      </Typography>
+                      <Typography
+                          sx={{  }}
+                          gutterBottom
+                          variant="p"
+                      >
+                          ({product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.rating_count : inputActiveAdDetail?.advertisementDetail?.rating_count})
+                      </Typography>
+                    </Box>}
+            </Box>
+            <Box sx={[commonStyles.product_info_block]}>
+            { uploading || delayLoading ? <Skeleton 
+              sx={{
+                bgcolor: "rgba(245, 245, 245, 1)",
+                borderRadius: ".5rem",
+              }}
+              width={250} /> :
+              <Typography sx={{fontSize:"0.9rem" }}>{productActiveAdDetail?.AdvertisemetDetail?.desc || inputActiveAdDetail?.advertisementDetail?.desc ?
+              product_type === "product-details" ? productActiveAdDetail?.AdvertisemetDetail?.desc : inputActiveAdDetail?.advertisementDetail?.desc : ""}</Typography>}
+            </Box>
+            <Box sx={[commonStyles.product_info_block, commonStyles.product_info_block_two]}>
+                <Box sx={{"display": "flex", "gap": "4px", alignItems: "center" }}>
+                { uploading || delayLoading ? <Skeleton 
+                  sx={{
+                    bgcolor: "rgba(245, 245, 245, 1)",
+                    borderRadius: ".5rem",
+                  }}
+                  width={150} /> :
+              <Box component="span" display='inline'>
+                  {product_type === "product-details" ? `${numberWithCommas(
+                            productActiveAdDetail?.AdvertisemetDetail?.price_per_unit,
+                            productActiveAdDetail?.AdvertisemetDetail?.currency
+                          )}` : 
+                          `${numberWithCommas(
+                            inputActiveAdDetail?.advertisementDetail?.price_per_unit,
+                            inputActiveAdDetail?.advertisementDetail?.currency
+                          )}`}
+                </Box>}
+                { uploading || delayLoading ? <Skeleton 
+                  sx={{
+                    bgcolor: "rgba(245, 245, 245, 1)",
+                    borderRadius: ".5rem",
+                  }}
+                  width={50} /> :
+              <Typography component='span' style={{ fontSize: "14px", fontStyle: "italic", color: "#686868" }}>(Per ton)</Typography>}
+              </Box>
+            </Box>
+            { uploading || delayLoading ? <Skeleton 
+              sx={{
+                bgcolor: "rgba(245, 245, 245, 1)",
+                borderRadius: ".5rem",
+                marginRight: "auto",
+              }}
+              width={200}
+              height={45} /> :
+                <Box sx={[commonStyles.product_info_block, commonStyles.product_info_block_two]}>
+                <Button sx={[commonStyles.buyNow]} onClick={() => {setOpenModal(true)}}>Buy Now</Button>
+            </Box>}
+          </Box>
+        </Grid>
+        <Box
+            sx={[
+              commonStyles.productInputOrderInfoOne
+            ]}
+          >
+            <Box sx={[commonStyles.product_info_block]}>
+            { uploading || delayLoading ? <Skeleton 
+              sx={{
+                bgcolor: "rgba(245, 245, 245, 1)",
+                borderRadius: ".5rem",
+              }}
+              width={200} /> :
+              <Typography >Warehouse Information</Typography>}
+            </Box>
+            <Grid
+              container
+              sx={{
+                display: 'flex',
+                flexDirection: "row",
+                marginTop: "32px",
+              }}
+            > 
+                { uploading || delayLoading ? <Skeleton 
+                  sx={{
+                    bgcolor: "rgba(245, 245, 245, 1)",
+                    borderRadius: ".5rem",
+                    marginRight: "64px",
+                  }}
+                  width={200}
+                  height={45} /> :
+              <WarehouseElement 
+                  warehouseDetail={
+                    product_type === "product-details" ? 
+                    productActiveAdDetail?.warehouseDetail : inputActiveAdDetail?.warehouseDetail} 
+                    product_type={product_type
+                  } 
+                />}
+                { uploading || delayLoading ? <Skeleton 
+                  sx={{
+                    bgcolor: "rgba(245, 245, 245, 1)",
+                    borderRadius: ".5rem",
+                  }}
+                  width={200}
+                  height={45} /> :
+              <WarehouseCertificate 
+                  certificateDetail={
+                    product_type === "product-details" ? 
+                    productActiveAdDetail?.certificateDetail : inputActiveAdDetail?.certificateDetail} 
+                />}
+            </Grid>
+        </Box>

@@ -1,0 +1,2 @@
+export const GET_INPUT_LIST = "GET_INPUT_LIST";
+export const GET_INPUT_DETAILS_BY_ID = "GET_INPUT_DETAILS_BY_ID";

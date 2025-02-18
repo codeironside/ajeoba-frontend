@@ -1,0 +1,2 @@
+export const GET_ITEM_LIST = "GET_ITEM_LIST";
+export const GET_ITEMS_DETAILS_BY_ID = "GET_ITEMS_DETAILS_BY_ID";

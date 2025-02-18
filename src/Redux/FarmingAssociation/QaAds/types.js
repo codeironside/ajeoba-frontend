@@ -1,0 +1,3 @@
+export const CREATE_ADS = "CREATE_ADS";
+export const GET_QAADS_LIST = "GET_QAADS_LIST";
+export const GET_QAADS_DETAILS = "GET_QAADS_DETAILS";

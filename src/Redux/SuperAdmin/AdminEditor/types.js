@@ -1,0 +1,2 @@
+export const GET_DATA = "GET_DATA";
+export const GET_TNC_AND_PRIVACY_POLICY = "GET_TNC_AND_PRIVACY_POLICY";

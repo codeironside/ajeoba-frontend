@@ -1,0 +1,225 @@
+html {
+  font-size: 16px;
+}
+body {
+  font-size: 1rem;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* navbar */
+/* .css-hyum1k-MuiToolbar-root */
+.css-hyum1k-MuiToolbar-root {
+  padding: 0;
+  width: 90%;
+  margin: 0 auto;
+  @media (max-width: 1149px) {
+    width: 100%;
+    padding: 0 2rem;
+  }
+  @media (max-width: 450px) {
+    padding: 0 1.8rem;
+  }
+  @media (max-width: 300px) {
+    padding: 0 1rem;
+  }
+}
+
+.css-18n1uzu-MuiPaper-root-MuiCard-root {
+  border: 1px thin rgba(210, 210, 210, 1);
+}
+
+.slide-bannerTextHeader {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+
+  animation: slideInbannerTextHeader 0.8s ease-in-out 0.8s forwards;
+}
+.slide-bannerTextSubtext {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+
+  animation: slideInbannerTextSubtext 0.9s ease-in-out 0.9s forwards;
+}
+.slide-bannerTextButton {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+
+  animation: slideInbannerTextButton 1s ease-in-out 1s forwards;
+}
+
+@keyframes slideInbannerTextHeader {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideInbannerTextSubtext {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideInbannerTextButton {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-banneravatar1 {
+  opacity: 0;
+  transform: scale(0.1);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.slide-banneravatar1.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide-banneravatar2 {
+  opacity: 0;
+  transform: scale(0.1);
+  transition: opacity 1.5s ease-in-out, transform 1.5s ease-out;
+}
+
+.slide-banneravatar2.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide-banneravatar3 {
+  opacity: 0;
+  transform: scale(0.1);
+  transition: opacity 2s ease-in-out, transform 2s ease-out;
+}
+
+.slide-banneravatar3.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/*SPLIDE ARROWS */
+/* .splide__arrow--next {
+  right: 85%;
+}
+
+.splide__arrow--prev {
+  left: 2%;
+}
+
+.splide__arrows {
+  display: "block";
+} */
+
+/* IMAGES BETNEATH VALPROPS */
+.lowercontainercontainer {
+  display: flex;
+  width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+.lowercontainerleft {
+  width: 40%;
+  height: 100%;
+  @media (max-width: 768px) {
+    width: 100%;
+    /* height: 30vh; */
+  }
+}
+.lowerrighttextcontainer {
+  width: 60%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("https://ajeoba-website.oss-eu-central-1.aliyuncs.com/websiteImagesNew/homepage/homepageblacksqurebelowvalpropbackground.svg");
+  display: flex;
+  justify-content: center;
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 30vh;
+  }
+  @media (max-width: 500px) {
+    width: 100%;
+    height: 25vh;
+  }
+}
+/* .valueropquote {
+  width: "6%";
+} */
+
+.lowerrightinnertextcontainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  gap: 0.5rem;
+}
+.lowercontainertext {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 3rem;
+  font-family: DM Sans;
+  color: white;
+  text-align: justify;
+  @media (max-width: 1400px) {
+    line-height: 2.5rem;
+    font-size: 1rem;
+  }
+  @media (max-width: 1200px) {
+    line-height: 1.5rem;
+    font-size: 0.8rem;
+  }
+  @media (max-width: 400px) {
+    line-height: 1.5rem;
+    font-size: 0.7rem;
+  }
+  @media (max-width: 300px) {
+    line-height: 1.3rem;
+    font-size: 0.7rem;
+  }
+}
+
+.inputsupplybottomcontent {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  flex-direction: row;
+}
+
+.bannerimginput {
+  width: 30%;
+}
+
+@media (max-width: 600px) {
+  .inputsupplybottomcontent {
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bannerimginput {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .css-18zrjlo-MuiTypography-root {
+    text-align: center;
+  }
+}
