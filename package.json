@@ -64,10 +64,10 @@
     "start": "env-cmd -f ./src/Env/.env.development react-scripts start",
     "start:uat": "env-cmd -f ./src/Env/.env.uat react-scripts start",
     "start:prod": "env-cmd -f ./src/Env/.env.prod react-scripts start",
-    "build": "env-cmd -f ./src/Env/.env.development react-scripts build",
+    "build:dev": "env-cmd -f ./src/Env/.env.development react-scripts build",
     "build:staging": "env-cmd -f ./src/Env/.env.staging react-scripts build",
     "build:uat": "env-cmd -f ./src/Env/.env.uat react-scripts build",
-    "build:prod": "env-cmd -f ./src/Env/.env.prod react-scripts build",
+    "build": "env-cmd -f ./src/Env/.env.prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sitemap": "node ./src/sitemap-generator.js"
