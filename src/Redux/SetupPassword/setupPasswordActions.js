@@ -9,6 +9,7 @@ import {
 
 
 export const postPassword = (tempUserId, password, navigate) => {
+  console.log(password)
   return (dispatch) => {
     call({
       method: "post",

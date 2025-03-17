@@ -932,6 +932,60 @@ const userRole = getUserData()?.role_id;
 
 export const privateRoutes = [
   {
+    path: '/',
+    component: <DashboardView />,
+    isLayoutNeeded: true,
+    name: "Home",
+    rolesAllowed: [
+      ROLES.FARMING_ASSOCIATION,
+      ROLES.ADMIN,
+      ROLES.SUPER_ADMIN,
+      ROLES.PRODUCT_AGGREGATOR,
+      ROLES.INPUT_SUPPLIER,
+      ROLES.SINGLE_SELLER,
+    ],
+    renderOnSidebar: true,
+    icon: dashboardIcon,
+    activeIcon: dashboardActiveIcon,
+  },
+
+  {
+    path: '/',
+    component: <DashboardView />,
+    isLayoutNeeded: true,
+    name: "Home",
+    rolesAllowed: [
+      ROLES.FARMING_ASSOCIATION,
+      ROLES.ADMIN,
+      ROLES.SUPER_ADMIN,
+      ROLES.PRODUCT_AGGREGATOR,
+      ROLES.INPUT_SUPPLIER,
+      ROLES.SINGLE_SELLER,
+    ],
+    renderOnSidebar: true,
+    icon: dashboardIcon,
+    activeIcon: dashboardActiveIcon,
+  },
+
+  {
+    path: '/',
+    component: <DashboardView />,
+    isLayoutNeeded: true,
+    name: "Home",
+    rolesAllowed: [
+      ROLES.FARMING_ASSOCIATION,
+      ROLES.ADMIN,
+      ROLES.SUPER_ADMIN,
+      ROLES.PRODUCT_AGGREGATOR,
+      ROLES.INPUT_SUPPLIER,
+      ROLES.SINGLE_SELLER,
+    ],
+    renderOnSidebar: true,
+    icon: dashboardIcon,
+    activeIcon: dashboardActiveIcon,
+  },
+
+  {
     path: USERROLESELECTION,
     component: <UserRoleSelectionView />,
     isLayoutNeeded: false,
@@ -1227,24 +1281,6 @@ export const privateRoutes = [
         component: <TradingView />,
       },
       {
-        path: ORDER_DETAIL,
-        component: <OrderDetailView />,
-      },
-      {
-        path: INP_ORDER_DETAIL,
-        component: <OrderInputDetailView />,
-      },
-      {
-        path: _INPUT_ORDER_DETAIL,
-        component: <InputOrderView />,
-      },
-      {
-        path: PRODUCT_ORDER_DETAIL,
-        component: <ProductOrderView />,
-      },
-      {
-        path: TRADING_ACTIVE_AD_DEATILS,
-        component: <TradingActiveAdDetailsView />,
       },
       {
         path: TRADING_PRODUCT_DETAILS,

@@ -18,6 +18,8 @@ export const getUserRoles = () => {
             return item.is_signup_allowed; // && item.name !== "Aggregator";
           });
           const userRoles = roles.map((item) => {
+            console.log('Filtered Roles:', item);
+
             return {
               id: item.id,
               name: item.name,

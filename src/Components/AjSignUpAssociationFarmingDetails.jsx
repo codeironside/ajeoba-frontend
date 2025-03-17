@@ -44,7 +44,7 @@ function AjSignUpAssociationFarmingDetails(props) {
     (state) => state.profileVerification.profileVerificationData
   );
 
-  const verificationText = profileVerificationData?.orgVerificationType[0];
+  const verificationText = profileVerificationData && profileVerificationData.orgVerificationType ? profileVerificationData.orgVerificationType[0] : '';
 
   const {
     register,
@@ -78,42 +78,46 @@ function AjSignUpAssociationFarmingDetails(props) {
   }, [CACDocument, chipValue]);
 
   useEffect(() => {
-    if (!products) {
+    if (!products || !userAccountData) {
       return;
     }
     if (userData.is_account_detail_filled) {
-      setValue("associationName", userAccountData.association_name, {
+      setValue("associationName", userAccountData.association_name || '', {
         shouldValidate: true,
       });
-      setValue("associationRegNumber", userAccountData.registration_number, {
+      setValue("associationRegNumber", userAccountData.registration_number || '', {
         shouldValidate: true,
       });
       setValue(
         "orgVerificationNumber",
-        userAccountData.org_verification_number,
+        userAccountData.org_verification_number || '',
         {
           shouldValidate: true,
         }
       );
 
       const productItems = [];
-      userAccountData.products.map((item) => {
-        productItems.push(_.find(products, { productId: item }).productName);
+      userAccountData.products && userAccountData.products.map((item) => {
+        const foundProduct = _.find(products, { productId: item });
+        if (foundProduct) {
+          productItems.push(foundProduct.productName);
+        }
       });
       setChipValue(productItems);
-      setValue("typeOfProducts", userAccountData.products, {
+      setValue("typeOfProducts", userAccountData.products || [], {
         shouldValidate: true,
       });
 
-      setValue("memberSize", userAccountData.member_size, {
+      setValue("memberSize", userAccountData.member_size || '', {
         shouldValidate: true,
       });
 
       setCACDocument({
-        file_name: "CAC Document",
-        id: userAccountData.cac_document,
+        file_name: userAccountData.file_name || "CAC Document",
+        id: userAccountData.cac_document || null,
       });
     }
+
   }, [products]);
 
   const addFarmingAssociation = () => {

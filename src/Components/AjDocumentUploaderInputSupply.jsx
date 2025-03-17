@@ -1,4 +1,5 @@
 import React from "react";
+import { getUserData } from "../Services/localStorageService"; // Import getUserData
 import { Button, Box } from "@mui/material";
 import uploadIcon from "../Assets/Images/upload.svg";
 import { uploadImageInputsupply } from "../Redux/common/Document/documentActions";
@@ -69,7 +70,10 @@ const AjDocumentUploaderInputSupply = (props) => {
       return;
     }
     const formData = new FormData();
+    const userId = getUserData()?.id; // Retrieve user ID
     formData.append("file", fileData);
+    formData.append("loggedin_from", userId); // Attach user ID
+    formData.append("loggedin_from", userId); // Attach user ID
     uploadImageInputsupply(formData, props.docType, dispatch).then((res) => {
       if (res?.status === 200) {
         props.setIsUpload && props.setIsUpload(true);

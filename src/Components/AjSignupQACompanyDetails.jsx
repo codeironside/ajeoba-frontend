@@ -47,7 +47,7 @@ function AjSignupQACompanyDetails() {
     (state) => state.profileVerification.profileVerificationData
   );
 
-  const verificationText = profileVerificationData?.orgVerificationType[0];
+  const verificationText = profileVerificationData && profileVerificationData.orgVerificationType ? profileVerificationData.orgVerificationType[0] : '';
 
   const {
     register,
@@ -80,35 +80,38 @@ function AjSignupQACompanyDetails() {
   }, [CACDocument, chipValue]);
 
   useEffect(() => {
-    if (!certificates) {
+    if (!certificates || !userAccountData) {
       return;
     }
     if (userData.is_account_detail_filled) {
-      setValue("companyName", userAccountData.company_name, {
+      setValue("companyName", userAccountData.company_name || '', {
         shouldValidate: true,
       });
-      setValue("companyRegNumber", userAccountData.registration_number, {
+      setValue("companyRegNumber", userAccountData.registration_number || '', {
         shouldValidate: true,
       });
       setValue(
         "orgVerificationNumber",
-        userAccountData.org_verification_number,
+        userAccountData.org_verification_number || '',
         {
           shouldValidate: true,
         }
       );
 
       const certificatesItems = [];
-      userAccountData.certificates.map((item) => {
-        certificatesItems.push(_.find(certificates, { id: item }).name);
+      userAccountData.certificates && userAccountData.certificates.map((item) => {
+        const foundCertificate = _.find(certificates, { id: item });
+        if (foundCertificate) {
+          certificatesItems.push(foundCertificate.name);
+        }
       });
       setChipValue(certificatesItems);
-      setValue("qaCertifications", userAccountData.certificates, {
+      setValue("qaCertifications", userAccountData.certificates || [], {
         shouldValidate: true,
       });
       setCACDocument({
         file_name: userAccountData.file_name || "CAC Document",
-        id: userAccountData.cac_document,
+        id: userAccountData.cac_document || null,
       });
     }
   }, [certificates]);

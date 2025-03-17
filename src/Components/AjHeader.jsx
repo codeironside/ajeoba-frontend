@@ -73,7 +73,7 @@ const styles = {
 const AjHeader = (props) => {
   const roleId = getUserData().role_id;
   const status = useSelector(
-    (state) => state.setStatus.status || getUserData().status
+    (state) => state.setStatus.status || getUserData()?.status
   );
 
   return (

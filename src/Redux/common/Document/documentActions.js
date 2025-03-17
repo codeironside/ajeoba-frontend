@@ -15,7 +15,7 @@ export const uploadImage = (formData, docType, dispatch) => {
   return call({
     method: "post",
     endpoint: "api/file",
-    payload: formData,
+    payload: formData, 
     query: { type: docType },
     type: "",
     dispatch,

@@ -26,6 +26,11 @@ const UserRoleSelection = () => {
   useEffect(() => {
     dispatch(getUserRoles());
     const userData = getUserData();
+    console.log('user data ',userData)
+    if (userData?.role_id === 11) { // SUPER_ADMIN
+      navigate('/admin/admin-management');
+      return;
+    }
     unregisteredCorperateBuyer
       ? setUserRoleSelectedId(6)
       : setUserRoleSelectedId(userData?.role_id || 1);

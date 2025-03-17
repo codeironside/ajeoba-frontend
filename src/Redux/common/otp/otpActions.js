@@ -228,11 +228,16 @@ export const getSignupOtpBuyer = (data, navigate) => {
 };
 
 export const signupOtpVerification = (data, navigate) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { tempUserId } = getState().otp;
+    const verificationData = {
+      ...data,
+      tempUserId
+    };
     call({
       method: "post",
       endpoint: "api/public/users/signup/otp/verify",
-      payload: data,
+      payload: verificationData,
       dispatch,
     })
       .then((res) => {
@@ -250,11 +255,16 @@ export const signupOtpVerification = (data, navigate) => {
   };
 };
 export const signupOtpInputSupplyVerification = (data, navigate) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { tempUserId } = getState().otp;
+    const verificationData = {
+      ...data,
+      tempUserId
+    };
     call({
       method: "post",
       endpoint: "api/public/users/signup/otp/verify",
-      payload: data,
+      payload: verificationData,
       dispatch,
     })
       .then((res) => {
@@ -560,16 +570,6 @@ export const refereeVerifyOtp = (data, finalData, navigate) => {
 export const completeRefereeOtpVerification = (data, navigate, id) => {
   return (dispatch) => {
     call({
-      method: "post",
-      endpoint: "api/farmer/add-farmer-referee",
-      payload: data,
-      dispatch,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          showToast("Referees are added successfully", "success");
-          refreshPage();
-        }
       })
       .catch((err) => {
         showToast(err.message, "error");

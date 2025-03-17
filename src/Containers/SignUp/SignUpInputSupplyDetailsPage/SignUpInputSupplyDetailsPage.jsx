@@ -318,6 +318,7 @@ function SignUpInputSupplyDetailsPage() {
               styleData={commonStyles.inputLabel}
               required
             />
+          
             <AjChipDropdown
               id="inputType"
               name="inputType"
