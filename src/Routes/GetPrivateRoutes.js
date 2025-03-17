@@ -949,42 +949,7 @@ export const privateRoutes = [
     activeIcon: dashboardActiveIcon,
   },
 
-  {
-    path: '/',
-    component: <DashboardView />,
-    isLayoutNeeded: true,
-    name: "Home",
-    rolesAllowed: [
-      ROLES.FARMING_ASSOCIATION,
-      ROLES.ADMIN,
-      ROLES.SUPER_ADMIN,
-      ROLES.PRODUCT_AGGREGATOR,
-      ROLES.INPUT_SUPPLIER,
-      ROLES.SINGLE_SELLER,
-    ],
-    renderOnSidebar: true,
-    icon: dashboardIcon,
-    activeIcon: dashboardActiveIcon,
-  },
-
-  {
-    path: '/',
-    component: <DashboardView />,
-    isLayoutNeeded: true,
-    name: "Home",
-    rolesAllowed: [
-      ROLES.FARMING_ASSOCIATION,
-      ROLES.ADMIN,
-      ROLES.SUPER_ADMIN,
-      ROLES.PRODUCT_AGGREGATOR,
-      ROLES.INPUT_SUPPLIER,
-      ROLES.SINGLE_SELLER,
-    ],
-    renderOnSidebar: true,
-    icon: dashboardIcon,
-    activeIcon: dashboardActiveIcon,
-  },
-
+  
   {
     path: USERROLESELECTION,
     component: <UserRoleSelectionView />,
