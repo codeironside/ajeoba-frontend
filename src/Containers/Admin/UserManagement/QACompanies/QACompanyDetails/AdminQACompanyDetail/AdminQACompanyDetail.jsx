@@ -570,7 +570,7 @@ const AdminQACompanyDetail = () => {
             }}
           >
             <AjInputLabel
-              displayText="QA Certifications"
+              displayText="Filtered Roles"
               required
               styleData={commonStyles.inputLabel}
             />

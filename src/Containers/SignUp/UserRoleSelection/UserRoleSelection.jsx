@@ -27,7 +27,7 @@ const UserRoleSelection = () => {
     dispatch(getUserRoles());
     const userData = getUserData();
     console.log('user data ',userData)
-    if (userData?.role_id === 11) { // SUPER_ADMIN
+    if (userData?.role_id === 109) { // SUPER_ADMIN
       navigate('/admin/admin-management');
       return;
     }
