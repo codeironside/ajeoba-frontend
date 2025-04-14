@@ -92,10 +92,10 @@ const styles = {
 
 export default function AjDropDown(props) {
   const {
-    options,
+    options = [],
     source,
     placeHolder,
-    value,
+    value = '',
     onChange,
     defaultValue = "",
     styleData,
@@ -103,6 +103,7 @@ export default function AjDropDown(props) {
     disableSourceForValue,
     isPlaceholderCapiltalize = true,
   } = props;
+
   const location = useLocation();
   const isFarmersDetaileditPage = location.pathname.includes("farmers/edit");
 
@@ -155,8 +156,8 @@ export default function AjDropDown(props) {
             },
           }}
         >
-          {options?.length !== 0 ? (
-            options?.map((item, index) => (
+          {Array.isArray(options) && options.length > 0 ? (
+            options.map((item, index) => (
               <MenuItem
                 key={index}
                 sx={{
@@ -170,8 +171,8 @@ export default function AjDropDown(props) {
               </MenuItem>
             ))
           ) : (
-            <MenuItem disabled value="No option found">
-              {"No data found"}
+            <MenuItem disabled value="">
+              {"No options available"}
             </MenuItem>
           )}
         </Select>

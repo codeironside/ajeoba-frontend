@@ -986,7 +986,7 @@ const FarmerDetails = ({ activeTab }) => {
                     ...detailsstyle.farmerdetailsheadetablecontainerprodList,
                   }}
                 >
-                  <AjAddFarmerProduct isRequired={true} forView={!edit} />
+                  <AjAddFarmerProduct isRequired={true} forView={edit} />
                 </Box>
               </Box>
             </Box>

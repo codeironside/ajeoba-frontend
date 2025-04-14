@@ -89,7 +89,7 @@ const AddFarmerPersonalDetails = () => {
   const getCertificatesDetails = (data) => {
     certificateData = data;
     setIsSubmit(false);
-    if (certificateData) {
+    if (!certificateData) {
       handleSubmit(onSubmit)();
     } else {
       showToast("Certificate is required", "error");

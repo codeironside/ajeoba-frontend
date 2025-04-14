@@ -26,11 +26,12 @@ const AjAddFarmerProduct = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [productName, setProductName] = useState(null);
 
+  const [productName, setProductName] = useState(null);
   const [productOptions, setProductOptions] = useState(products);
   const [unitOfMeasurement, setUnitOfMeasurement] = useState(null);
   const [error, setError] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -41,12 +42,24 @@ const AjAddFarmerProduct = (props) => {
     mode: "onChange",
   });
 
+  // Debug: Log product listing and product options
+  useEffect(() => {
+    console.log("Product listing updated:", productData?.productListing);
+    console.log(
+      "Number of products in listing:",
+      productData?.productListing?.length
+    );
+  }, [productData]);
+
   const onSubmit = (data) => {
+    console.log("onSubmit data:", data);
+    // Fallback to first product option if productName not set
     const productDataToSend = {
-      productName: productName ? productName : productOptions[0].productName,
+      productName: productName ? productName : productOptions[0]?.productName,
       yield: data.yield,
       unit_of_measurement: unitOfMeasurement,
     };
+
     if (productData?.productListing?.length < 10) {
       dispatch(
         addProduct({
@@ -56,6 +69,7 @@ const AjAddFarmerProduct = (props) => {
       );
       showToast("Product added successfully", "success");
       setValue("yield", null);
+      // Reset productName if there are other options available
       if (productOptions?.length > 1) {
         setProductName(productOptions[0].productName);
       }
@@ -64,21 +78,23 @@ const AjAddFarmerProduct = (props) => {
     }
   };
 
+  // Filter products that are not already added to the listing.
   const setProductsOptionFunc = () => {
-    let optionsRes = [];
-    optionsRes = products?.filter((el) => {
-      return !productData?.productListing?.find((element) => {
-        return element.productName === el.productName;
-      });
+    const optionsRes = products?.filter((el) => {
+      return !productData?.productListing?.find(
+        (element) => element.productName === el.productName
+      );
     });
+    console.log("Filtered product options:", optionsRes);
     setProductOptions(optionsRes);
   };
 
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
+    // Update available product options when productData or products change.
     if (productData?.productListing?.length) {
       setProductsOptionFunc();
       setError(false);
@@ -88,37 +104,62 @@ const AjAddFarmerProduct = (props) => {
   }, [productData, products]);
 
   useEffect(() => {
-    if (productOptions) {
+    if (productOptions && productOptions.length) {
       setProductName(productOptions[0]?.productName);
       setUnitOfMeasurement(productOptions[0]?.unit_of_measurement);
+      console.log(
+        "Product options updated. Selected product:",
+        productOptions[0]
+      );
+    } else {
+      console.log("No more available product options.");
+      // Optional: Clear productName/unit if none are available
+      setProductName(null);
+      setUnitOfMeasurement(null);
     }
   }, [productOptions]);
 
   useEffect(() => {
     if (productName && productOptions) {
-      setUnitOfMeasurement(
-        _.find(productOptions, { productName: productName })
-          ?.unit_of_measurement
+      const selectedProduct = _.find(productOptions, { productName });
+      setUnitOfMeasurement(selectedProduct?.unit_of_measurement);
+      console.log(
+        "Product changed to:",
+        productName,
+        "Unit:",
+        selectedProduct?.unit_of_measurement
       );
     }
-  }, [productName]);
+  }, [productName, productOptions]);
 
   const productChangeHandler = (selectedValue) => {
+    console.log("Dropdown changed:", selectedValue.target.value);
     setProductName(selectedValue.target.value);
   };
 
   const nextHandler = () => {
+    console.log(
+      "Next button clicked, current product listing length:",
+      productData?.productListing?.length
+    );
     if (productData?.productListing?.length) {
       navigate(ADD_FARMER_REFEREE_SELECTION);
     } else {
       setError(true);
     }
   };
+
   const isFarmersDetaileditPage = location.pathname.includes("farmers/edit");
   const isFarmersDetailPage = location.pathname.includes("farmers/detail");
 
+  // Use conditional text based on whether any product exists in the listing.
+  const addButtonText = productData?.productListing?.length
+    ? "add another product"
+    : "add product";
+
   return (
     <>
+      {/* Render product selection form only if there are product options available */}
       {productOptions?.length >= 1 &&
         !isFarmersDetailPage &&
         !isFarmersDetaileditPage && (
@@ -151,9 +192,7 @@ const AjAddFarmerProduct = (props) => {
                     ...(typeof props.forView !== "undefined" &&
                       styles.customDropdownStyleNew),
                   }}
-                  defaultValue={
-                    products && productOptions && productOptions[0]?.productName
-                  }
+                  defaultValue={productOptions[0]?.productName}
                   placeHolder="Select Product"
                 />
               </Grid>
@@ -172,15 +211,13 @@ const AjAddFarmerProduct = (props) => {
                   placeholder="Enter yield"
                   sx={{
                     ...commonStyles.inputStyle,
-                    ...(typeof props.forView != "undefined" && {
+                    ...(typeof props.forView !== "undefined" && {
                       width: "21.25rem",
-                      "@media (max-width:600px)": {
-                        width: "17rem",
-                      },
+                      "@media (max-width:600px)": { width: "17rem" },
                     }),
                   }}
                   {...register("yield")}
-                  error={errors.yield ? true : false}
+                  error={!!errors.yield}
                   endAdornment={
                     <Typography sx={commonStyles.adornmentStyle}>
                       {textCapitalize(unitOfMeasurement)}
@@ -197,41 +234,20 @@ const AjAddFarmerProduct = (props) => {
               </Grid>
             </Grid>
 
+            {/* Button to add a product. Render only if there are available product options. */}
             <AjButton
               variant="text"
               styleData={{
                 ...commonStyles.underlineStyle,
                 ...(props.forView && farmerDetailStyles.displayNone),
               }}
-              displayText={
-                productData?.productListing?.length
-                  ? "add another product"
-                  : "add product"
-              }
+              displayText={addButtonText}
               onClick={handleSubmit(onSubmit)}
             />
-
-            <AjButton
-              variant="contained"
-              displayText="Next"
-              styleData={{
-                ...styles.btnStyle,
-                ...(productData?.productListing?.length &&
-                  commonStyles.marginTopRoot),
-                ...(typeof props.forView !== "undefined" &&
-                  farmerDetailStyles.displayNone),
-              }}
-              onClick={nextHandler}
-            />
-            {error && (
-              <AjTypography
-                styleData={commonStyles.colorRed}
-                displayText="Please add product"
-              />
-            )}
           </>
         )}
 
+      {/* Render product listing regardless of product options */}
       <Box
         sx={{
           ...(productOptions?.length < 1 && { marginTop: "2rem" }),
@@ -242,9 +258,7 @@ const AjAddFarmerProduct = (props) => {
           !isFarmersDetaileditPage &&
           !isFarmersDetailPage && (
             <AjInputLabel
-              styleData={{
-                ...(props.customStyleData || commonStyles.textPrimaryGreen),
-              }}
+              styleData={props.customStyleData || commonStyles.textPrimaryGreen}
               displayText="Product Listing"
               required={props.isRequired}
             />
@@ -255,13 +269,36 @@ const AjAddFarmerProduct = (props) => {
             disableDelete={props.forView}
           />
         </Box>
+
+        {/* Next Button: Show this if there is at least one product in the listing */}
+        {productData?.productListing?.length > 0 &&
+          !isFarmersDetaileditPage &&
+          !isFarmersDetailPage && (
+            <AjButton
+              variant="contained"
+              displayText="Next"
+              styleData={{
+                ...styles.btnStyle,
+                ...commonStyles.marginTopRoot,
+                ...(typeof props.forView !== "undefined" &&
+                  farmerDetailStyles.displayNone),
+              }}
+              onClick={nextHandler}
+            />
+          )}
+        {error && (
+          <AjTypography
+            styleData={commonStyles.colorRed}
+            displayText="Please add product"
+          />
+        )}
       </Box>
 
+      {/* Render for Edit Farmer Details page */}
       {isFarmersDetaileditPage && (
         <>
           <Box sx={{ ...farmerDetailStyles.yieldStyles }}>
             <Box sx={{ ...farmerDetailStyles.yieldStyleschildren }}>
-              {" "}
               <AjInputLabel
                 required={true}
                 styleData={commonStyles.inputLabel}
@@ -273,13 +310,10 @@ const AjAddFarmerProduct = (props) => {
                 onChange={productChangeHandler}
                 source="productName"
                 styleData={commonStyles.inputStyleproductyield}
-                defaultValue={
-                  products && productOptions && productOptions[0]?.productName
-                }
+                defaultValue={productOptions[0]?.productName}
                 placeHolder="Select Product"
               />
             </Box>
-
             <Box sx={{ ...farmerDetailStyles.yieldStyleschildren }}>
               <AjInputLabel
                 displayText="Yield"
@@ -293,11 +327,9 @@ const AjAddFarmerProduct = (props) => {
                 type="number"
                 name="Yeild"
                 placeholder="Enter yield"
-                sx={{
-                  ...commonStyles.inputStyleproductyield,
-                }}
+                sx={{ ...commonStyles.inputStyleproductyield }}
                 {...register("yield")}
-                error={errors.yield ? true : false}
+                error={!!errors.yield}
                 endAdornment={
                   <Typography sx={commonStyles.adornmentStyle}>
                     {textCapitalize(unitOfMeasurement)}
@@ -310,36 +342,22 @@ const AjAddFarmerProduct = (props) => {
               />
             </Box>
           </Box>
-          <Box
-            sx={{
-              ...farmerDetailStyles.detailButtonBoxeditfarmer,
-            }}
-          >
+          <Box sx={{ ...farmerDetailStyles.detailButtonBoxeditfarmer }}>
             <AjButton
               variant="text"
               styleData={{
                 ...commonStyles.underlineStyleyeild,
-                ...(props.forView && farmerDetailStyles.displayNone),
+                ...(props.forView),
               }}
-              displayText={
-                productData?.productListing?.length
-                  ? "add another product"
-                  : "add product"
-              }
+              displayText={addButtonText}
               onClick={handleSubmit(onSubmit)}
             />
           </Box>
-
           <AjButton
             variant="contained"
             displayText="Next"
-            styleData={{
-              ...styles.btnStyle,
-              ...(productData?.productListing?.length &&
-                commonStyles.marginTopRoot),
-              ...(typeof props.forView !== "undefined" &&
-                farmerDetailStyles.displayNone),
-            }}
+            styleData={{ ...styles.btnStyle }}
+            aria-label="Continue to next step"
             onClick={nextHandler}
           />
           {error && (
